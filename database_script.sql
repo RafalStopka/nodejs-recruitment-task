@@ -1,0 +1,50 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE DATABASE mydb CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+  `id` INT NOT NULL,
+  `premium` TINYINT NULL,
+  `movies` INT NULL,
+  `login` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`movies` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_movies_users1_idx` (`users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_movies_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`details` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(180) NULL,
+  `released` DATE NULL,
+  `genre` VARCHAR(45) NULL,
+  `director` VARCHAR(45) NULL,
+  `movies_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_details_movies_idx` (`movies_id` ASC) VISIBLE,
+  CONSTRAINT `fk_details_movies`
+    FOREIGN KEY (`movies_id`)
+    REFERENCES `mydb`.`movies` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+INSERT INTO `mydb`.`users` VALUES (123, 0, 0,  "basic-thomas", "sR-_pcoow-27-6PAwCD8");
+INSERT INTO `mydb`.`users` VALUES (434, 1, 0,  "premium-jim", "GBLtTyq3E_UNjFnpo9m6");
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

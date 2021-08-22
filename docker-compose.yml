@@ -6,9 +6,41 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - published: ${APP_PORT:-3000}
-        target: 3000
+      - "3000"
     volumes:
       - .:/app/
     environment:
       JWT_SECRET: ${JWT_SECRET}
+  interview:
+    command: node interview/test.js
+    build:
+      context: .
+      dockerfile: Dockerfile_interview
+    ports:
+      - "3001"
+    volumes:
+      - .:/app/
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_NAME: ${DATABASE_NAME}
+      API_KEY: ${API_KEY}
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    restart: always
+    container_name: database
+    volumes:
+      - "./database_script.sql:/docker-entrypoint-initdb.d/1.sql"
+    build:
+      context: .
+      dockerfile: Dockerfile_database
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 2

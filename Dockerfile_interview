@@ -1,0 +1,11 @@
+FROM node:14.15-alpine
+
+WORKDIR /app
+
+COPY ./package.json ./package-lock.json ./
+RUN npm install
+
+RUN mkdir ./interview
+COPY ./interview ./interview
+
+CMD ["node", "./interview/test.js"]
