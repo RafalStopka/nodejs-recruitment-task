@@ -3,12 +3,12 @@
 ## Basic informations
   
   1. To start the project:
-    I. Copy this repository
-    II. In the repository catalog, run
+    i. Copy this repository
+    ii. In the repository catalog, run
       ```
         docker-compose up
       ```
-    III. To modify enviroments variables, modify the .env file or run e.g
+    iii. To modify enviroments variables, modify the .env file or run e.g
       JWT_SECRET=your_secret docker-compose
   2. To stop the project, run
     ```
@@ -26,17 +26,17 @@
     ```
     If this data is empty or incorrect, you will get 401 error status as response
   2. POST /movies
-    I. Creates new movie. Basic users can create up to 5 movies per account. Premium users have no limits
-    II. You must provide additional parameter in the body:
+    i. Creates new movie. Basic users can create up to 5 movies per account. Premium users have no limits
+    ii. You must provide additional parameter in the body:
     {
       ...
       title: title
     }
-    III. If the movie already exists, you will get 409 error status as response
-    IV. After succesfully adding a movie, you will get 200 status as response
+    iii. If the movie already exists, you will get 409 error status as response
+    iv. After succesfully adding a movie, you will get 200 status as response
   3. GET /movies
-    I. Returns all movies created by user.
-    II. If you are authorized, you will get status 200 and array of object of following type
+    i. Returns all movies created by user.
+    ii. If you are authorized, you will get status 200 and array of object of following type
       ```
         {
             "id": 7,
