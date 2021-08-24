@@ -3,7 +3,9 @@
 ## Basic informations
   
 1. To start the project:
+
 i. Copy this repository
+
 ii. In the repository catalog, run
 
 ```
@@ -11,7 +13,10 @@ docker-compose up
 ```
 
 iii. To modify enviroments variables, modify the .env file or run e.g
+
+```
 JWT_SECRET=your_secret docker-compose
+```
 
 2. To stop the project, run
 
@@ -33,7 +38,9 @@ password: password
 If this data is empty or incorrect, you will get 401 error status as response
 
 2. POST /movies
+
 i. Creates new movie. Basic users can create up to 5 movies per account. Premium users have no limits
+
 ii. You must provide additional parameter in the body:
 
 ```
