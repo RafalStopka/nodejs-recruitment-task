@@ -8,4 +8,4 @@ RUN npm install
 RUN mkdir ./interview
 COPY ./interview ./interview
 
-CMD ["node", "./interview/test.js"]
+CMD ["node", "./interview/server.js"]

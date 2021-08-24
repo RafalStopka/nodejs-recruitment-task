@@ -6,10 +6,7 @@ CREATE DATABASE mydb CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `id` INT NOT NULL,
-  `premium` TINYINT NULL,
   `movies` INT NULL,
-  `login` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -28,7 +25,6 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`details` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(180) NULL,
   `released` DATE NULL,
   `genre` VARCHAR(45) NULL,
   `director` VARCHAR(45) NULL,
@@ -42,8 +38,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`details` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-INSERT INTO `mydb`.`users` VALUES (123, 0, 0,  "basic-thomas", "sR-_pcoow-27-6PAwCD8");
-INSERT INTO `mydb`.`users` VALUES (434, 1, 0,  "premium-jim", "GBLtTyq3E_UNjFnpo9m6");
+INSERT INTO `mydb`.`users` VALUES (123, 0);
+INSERT INTO `mydb`.`users` VALUES (434, 0);
+INSERT INTO `mydb`.`users` VALUES (1, 0);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
