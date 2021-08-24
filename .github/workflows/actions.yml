@@ -1,0 +1,23 @@
+name: actions
+
+on: [push]
+
+jobs:
+
+  build:
+
+    id: dotenv
+    uses: ./.github/actions/dotenv-action
+
+
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{steps.dotenv.outputs.JWT_SECRET}}
+      DATABASE_HOST: ${{steps.dotenv.outputs.DATABASE_HOST}}
+      DATABASE_USER: ${{steps.dotenv.outputs.DATABASE_USER}}
+      DATABASE_NAME: ${{steps.dotenv.outputs.DATABASE_NAME}}
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the docker-compose stack
+      run: docker-compose -f docker-compose.yml  up -d
