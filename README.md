@@ -51,10 +51,12 @@ title: title
 ```
 
 iii. If the movie already exists, you will get 409 error status as response
+
 iv. After succesfully adding a movie, you will get 200 status as response
 
 3. GET /movies
 i. Returns all movies created by user.
+
 ii. If you are authorized, you will get status 200 and array of object of following type
 
 ```
