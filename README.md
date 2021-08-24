@@ -1,145 +1,55 @@
 # Node.js recruitment task
 
-We'd like you to build a simple Movie API. It should provide two endpoints:
+## Basic informations
+  
+  1. To start the project:
+    1. Copy this repository
+    2. In the repository catalog, run
+      ```
+        docker-compose up
+      ```
+    3. To modify enviroments variables, modify the .env file or run e.g
+      JWT_SECRET=your_secret docker-compose
+  2. To stop the project, run
+    ```
+      docker-compose down
+    ```
+     
+## API DOCUMENTATION
 
-1. `POST /movies`
-   1. Allows creating a movie object based on movie title passed in the request body
-   2. Bade on title additional movie details should be fetched from
-      https://omdbapi.com/ and saved to the database. Data we would like you to
-      fetch from OMDb API:
-   ```
-     Title: string
-     Released: date
-     Genre: string
-     Director: string
-   ```
-   3. Only authorized users can create a movie.
-   4. `Basic` users are restricted to create a 5 movies per month (calendar
-      month). `Premium` users have no limits.
-1. `GET /movies`
-   1. Should fetch a list of all movies created by an authorized user.
+  1. For all endpoints you have to provide body containing
+    ```
+    {
+      username: username
+      password: password
+    }
+    ```
+    If this data is empty or incorrect, you will get 401 error status as response
+  2. POST /movies
+    1. Creates new movie. Basic users can create up to 5 movies per account. Premium users have no limits
+    2. You must provide additional parameter in the body:
+    {
+      ...
+      title: title
+    }
+    3. If the movie already exists, you will get 409 error status as response
+    4. After succesfully adding a movie, you will get 200 status as response
+  3. GET /movies
+    1. Returns all movies created by user.
+    2. If you are authorized, you will get status 200 and array of object of following type
+      ```
+        {
+            "id": 7,
+            "title": "Amazing SpiderMan2",
+            "users_id": 434
+        }
+      ```
 
-⚠️ Don't forget to verify user's authorization token before processing the
-request. The token should be passed in request's `Authorization` header.
+## Note
 
-```
-Authorization: Bearer <token>
-```
+  The rules of the task and documentation of the auth service are on:
+  https://github.com/netguru/nodejs-recruitment-task
 
-# Authorization service
-
-To authorize users please use our simple auth service based on JWT tokens.
-Auth service code is located under `./src` directory
-
-## Prerequisites
-
-You need to have `docker` and `docker-compose` installed on your computer to run the service
-
-## Run locally
-
-1. Clone this repository
-1. Run from root dir
-
-```
-JWT_SECRET=secret docker-compose up -d
-```
-
-By default the auth service will start on port `3000` but you can override
-the default value by setting the `APP_PORT` env var
-
-```
-APP_PORT=8081 JWT_SECRET=secret docker-compose up -d
-```
-
-To stop the authorization service run
-
-```
-docker-compose down
-```
-
-## JWT Secret
-
-To generate tokens in auth service you need to provide env variable
-`JWT_SECRET`. It should be a string value. You should use the same secret in
-the API you're building to verify the JWT tokens.
-
-## Users
-
-The auth service defines two user accounts that you should use
-
-1. `Basic` user
-
-```
- username: 'basic-thomas'
- password: 'sR-_pcoow-27-6PAwCD8'
-```
-
-1. `Premium` user
-
-```
-username: 'premium-jim'
-password: 'GBLtTyq3E_UNjFnpo9m6'
-```
-
-## Token payload
-
-Decoding the auth token will give you access to basic information about the
-user including its role.
-
-```
-{
-  "userId": 123,
-  "name": "Basic Thomas",
-  "role": "basic",
-  "iat": 1606221838,
-  "exp": 1606223638,
-  "iss": "https://www.netguru.com/",
-  "sub": "123"
-}
-```
-
-## Example request
-
-To authorize user call the auth service using for example `curl`. We assume
-that the auth service is running of the default port `3000`.
-
-Request
-
-```
-curl --location --request POST '0.0.0.0:3000/auth' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "username": "basic-thomas",
-    "password": "sR-_pcoow-27-6PAwCD8"
-}'
-```
-
-Response
-
-```
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywibmFtZSI6IkJhc2ljIFRob21hcyIsInJvbGUiOiJiYXNpYyIsImlhdCI6MTYwNjIyMTgzOCwiZXhwIjoxNjA2MjIzNjM4LCJpc3MiOiJodHRwczovL3d3dy5uZXRndXJ1LmNvbS8iLCJzdWIiOiIxMjMifQ.KjZ3zZM1lZa1SB8U-W65oQApSiC70ePdkQ7LbAhpUQg"
-}
-```
-
-## Rules
-
-- Database and framework choice are on your side.
-- Your API has to be dockerized. Create `Dockerfile` and `docker-compose` and document the process of running it locally.
-- Provided solution should consist of two microservices.
-  - `Authentication Service` - provided by us to auth users
-  - `Movies Service` - created by you to handle movies data
-- Test your code.
-- Provide documentation of your API.
-- Application should be pushed to the public git repository and should have a
-  working CI/CD pipeline that runs the tests. For example you can use GitHub
-  Actions or CircleCI. Create a sample PR to show us the working CI/CD pipeline.
-
-## What will be evaluated?
-
-- Task completeness
-- Architecture
-- Code quality
-- Tests quality
-- Database design
-- Technology stack
+  Due to problems with api keys on https://omdbapi.com/, I did not implement point 2 of the 
+  `POST /movies` task.
+    
